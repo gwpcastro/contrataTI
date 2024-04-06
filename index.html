@@ -4,12 +4,15 @@
     <meta charset="UTF-8">
     <title>CONTRATAÇÃO TI</title>
     <style>
-
-        body{
+        body {
             background-image: url("background.avif");
             background-position: center;
             background-size: cover;
+            transition: background-color 0.5s ease; /* Transição suave para a mudança de cor de fundo */
+            margin: 0; /* Remover margens padrão */
+            padding: 0; /* Remover preenchimento padrão */
         }
+
         .dialog-box {
             position: fixed;
             top: 50%;
@@ -19,18 +22,97 @@
             border: 1px solid #ccc;
             padding: 20px;
             text-align: center;
+            z-index: 1; /* Garante que a caixa de diálogo esteja acima da imagem */
+            max-width: 80%; /* Largura máxima */
+        }
+
+        .dialog-content {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.8); /* Fundo branco com opacidade */
+            display: none; /* Inicialmente esconde o conteúdo */
+            justify-content: center;
+            align-items: center;
+            flex-direction: column; /* Altera a direção do fluxo dos elementos filhos */
+            z-index: 2; /* Garante que o conteúdo esteja acima do fundo */
+            overflow: hidden; /* Impede que conteúdos maiores que a tela apareçam */
+            padding: 20px; /* Adiciona preenchimento */
+        }
+
+        .dialog-content img {
+            max-width: 40; /* Ajusta a largura da imagem */
+            max-height: 40%; /* Ajusta a altura máxima da imagem */
+            animation: fadein 2s; /* Adiciona um efeito de fade in */
+        }
+
+        .dialog-content h2 {
+            font-size: 5vw; /* Tamanho de fonte responsivo */
+            margin-top: 20px;
+        }
+
+        .second-image {
+            position: absolute;
+            top: 5%; /* Ajusta a posição vertical */
+            right: 5%; /* Ajusta a posição horizontal */
+            width: 20%; /* Define a largura da imagem */
+            z-index: 3; /* Garante que a segunda imagem esteja acima do fundo e da primeira imagem */
+            display: none; /* Oculta a segunda imagem por padrão */
+        }
+
+        @keyframes fadein {
+            from { opacity: 0; }
+            to   { opacity: 1; }
+        }
+
+        @media screen and (max-width: 600px) {
+            /* Estilos específicos para telas menores (por exemplo, dispositivos móveis) */
+            .dialog-box {
+                max-width: 90%; /* Reduz a largura máxima para 90% em telas menores */
+            }
+            .dialog-content h2 {
+                font-size: 8vw; /* Tamanho de fonte responsivo para telas menores */
+            }
         }
     </style>
 </head>
 <body>
     <div class="dialog-box">
         <h2>VEM para a TI!</h2>
-        <button onclick="escolhaOK()">SIM</button>
-        <button onclick="escolhaOK()">SIM</button>
+        <button onclick="mostrarSelecao(1)">SIM</button>
+        <button onclick="mostrarSelecao(2)">SIM</button>
+    </div>
+    <div class="dialog-content" id="dialog-content-1">
+        <img src="img.png" alt="Imagem Contrato">
+        <h2>Contratado Meu Patrão</h2>
+    </div>
+    <div class="dialog-content" id="dialog-content-2">
+        <img src="img.png" alt="Imagem Contrato">
+        <h2>Contratado Meu Patrão</h2>
+    </div>
+    <div class="second-image" id="second-image">
+        <img src="sol.png" alt="Sol">
     </div>
     <script>
-        function escolhaOK() {
-            alert("Ótimo! Aguardamos você.");
+        function mostrarSelecao(opcao) {
+            // Exibe o conteúdo ao clicar no botão
+            var contentId = 'dialog-content-' + opcao;
+            document.getElementById(contentId).style.display = 'flex';
+            // Adiciona a classe ao body para mudar o fundo para branco
+            document.body.style.backgroundColor = '#fff';   
+            // Exibe a segunda imagem correspondente
+            document.getElementById('second-image').style.display = 'block';
+            // Diminui o tamanho das imagens
+            var images = document.querySelectorAll('.dialog-content img');
+            images.forEach(function(img) {
+                img.style.width = '40%'; /* Define a largura das imagens como 20% após clicar no botão */
+                img.style.height = '40%'; /* Define a altura das imagens como 20% após clicar no botão */
+            });
+            // Diminui o tamanho da segunda imagem
+            document.getElementById('second-image').style.width = '40%';
+            document.getElementById('second-image').style.height = '40%';
         }
     </script>
 </body>
